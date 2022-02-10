@@ -1,0 +1,37 @@
+version: '3.8'
+
+networks:
+  default:
+    name: hawker-finder
+
+volumes:
+  data:
+
+services:
+  db:
+    image: mongo
+    container_name: hawker-finder-db
+    restart: always
+    env_file:
+      - ./compose/env
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data/db
+    # command: 
+
+  # ingest:
+  #   container_name: hawker-finder-ingest
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/ingest/Dockerfile
+  #   depends_on:
+  #     - db
+  
+  # ui:
+  #   container_name: hawker-finder-ui
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/streamlit/Dockerfile
+  #   depends_on:
+  #     - db

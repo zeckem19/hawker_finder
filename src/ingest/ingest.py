@@ -18,7 +18,7 @@ PATTERN = {'name': re.compile(r"<th>NAME</th> <td>(.+?)</td>"),
             'url': re.compile(r"<th>PHOTOURL</th> <td>(.+?)</td>")
 }
 
-def download_url(url=URL) -> bool:
+def download_data(url=URL) -> bool:
     '''
     Input
     - str: download url 
@@ -75,11 +75,4 @@ def extract_data(
                 continue
 
             documents.append(hawker.dict())
-    
-
-download_url()
-extract_data()
-
-
-
-download_url()
+    return documents
