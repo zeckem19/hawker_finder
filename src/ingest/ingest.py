@@ -55,12 +55,14 @@ def extract_data(
                 data = json.loads(line.strip('\n ,'))
                 name = reg['name'].search(data['properties']['Description']).group(1)
                 url = reg['url'].search(data['properties']['Description']).group(1)
-    
+                
+                data['geometry']['coordinates'].pop()
+
                 hawker = HawkerCentre(
                     creation_timestamp=datetime.now(),
                     name=name,
                     photourl=url,
-                    location=data['geometry'],
+                    loc=data['geometry'],
                 )
 
             except json.JSONDecodeError:

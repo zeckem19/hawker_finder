@@ -18,4 +18,4 @@ class GeoJSON(BaseModel):
 class HawkerCentre(CreationMixin):
     name: constr(min_length=2, max_length= 100, strip_whitespace=True)
     photourl: AnyHttpUrl
-    location: GeoJSON
+    loc: GeoJSON

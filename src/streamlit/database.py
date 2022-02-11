@@ -11,7 +11,7 @@ MURL = os.environ.get("MURL","mongodb://db:27017/")
 client = MongoClient(MURL)
 hawker_collection = client["dev"]["hawkers"]
 
-def refresh_db_data(data: List[Dict]):
+def find_hawker(lat: float, lon: float):
     '''
     Input
     - List of dicts (hawker centre objects)
@@ -23,8 +23,11 @@ def refresh_db_data(data: List[Dict]):
     2. inserts data
     3. creates index on location
     '''
-    hawker_collection.delete_many({})
-    hawker_collection.insert_many(data)
-    hawker_collection.create_index([("loc", GEOSPHERE)])
-
-    return True
+    return hawker_collection.find( { "loc" :
+                                { "$near" :
+                                    { "$geometry" :
+                                        { "type" : "Point" ,
+                                            "coordinates" : [ lon , lat ] } ,
+                                            "$maxDistance" : 20000
+                            } } } )
+     

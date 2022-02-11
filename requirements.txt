@@ -1,2 +1,3 @@
-requests
-pydantic
+pymongo
+streamlit
+pandas

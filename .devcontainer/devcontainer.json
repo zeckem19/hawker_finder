@@ -9,7 +9,7 @@
 			// Update 'VARIANT' to pick a Python version: 3, 3.9, 3.8, 3.7, 3.6.
 			// Append -bullseye or -buster to pin to an OS version.
 			// Use -bullseye variants on local on arm64/Apple Silicon.
-			"VARIANT": "3.9-bullseye",
+			"VARIANT": "3.7-bullseye",
 			// Options
 			"NODE_VERSION": "lts/*"
 		}
@@ -44,8 +44,8 @@
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [9000],
-
+	// "forwardPorts": [3000,9000,8501],
+	"appPort": [ "8501:8501", "3000:3000" ],
 	// Use 'portsAttributes' to set default properties for specific forwarded ports. More info: https://code.visualstudio.com/docs/remote/devcontainerjson-reference.
 	"portsAttributes": {
 		"9000": {
