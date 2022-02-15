@@ -75,6 +75,5 @@ def extract_data(
             except:
                 traceback.print_exc()
                 continue
-
             documents.append(hawker.dict())
     return documents

@@ -1,0 +1,18 @@
+import os
+from datetime import datetime
+from pydantic import AnyHttpUrl
+from ingest import download_data, extract_data
+
+class TestIngestFunction:
+    def test_download_data(self):
+        assert download_data()
+        assert os.path.isfile("/tmp/hawker-centres-geojson.geojson") 
+
+    def test_extract_data(self):
+        with open('/tmp/test_file','w') as testf:
+            testf.write(r'{ "type": "Feature", "properties": { "Name": "kml_117", "Description": "<center><table><tr><th colspan= align=><em>Attributes<\/em><\/th><\/tr><tr bgcolor=\"#E3E3F3\"> <th>ADDRESSBLOCKHOUSENUMBER<\/th> <td>1<\/td> <\/tr><tr bgcolor=\"\"> <th>LATITUDE<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>EST_ORIGINAL_COMPLETION_DATE<\/th> <td>21\/1\/1969<\/td> <\/tr><tr bgcolor=\"\"> <th>STATUS<\/th> <td>Existing<\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>CLEANINGSTARTDATE<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>ADDRESSUNITNUMBER<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>ADDRESSFLOORNUMBER<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>NO_OF_FOOD_STALLS<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>HYPERLINK<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>REGION<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>APPROXIMATE_GFA<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>LONGITUDE<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>INFO_ON_CO_LOCATORS<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>NO_OF_MARKET_STALLS<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>AWARDED_DATE<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>LANDYADDRESSPOINT<\/th> <td>30071.510000000002<\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>CLEANINGENDDATE<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>PHOTOURL<\/th> <td>http:\/\/www.nea.gov.sg\/images\/default-source\/Hawker-Centres-Division\/resize_1267874440744.jpg<\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>DESCRIPTION<\/th> <td>HUP Standard Upgrading<\/td> <\/tr><tr bgcolor=\"\"> <th>NAME<\/th> <td>Jalan Kukoh Blk 1 (Kukoh 21 Food Centre)<\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>ADDRESSTYPE<\/th> <td>I<\/td> <\/tr><tr bgcolor=\"\"> <th>RNR_STATUS<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>ADDRESSBUILDINGNAME<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>HUP_COMPLETION_DATE<\/th> <td>4\/10\/2010<\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>LANDXADDRESSPOINT<\/th> <td>28737.57<\/td> <\/tr><tr bgcolor=\"\"> <th>ADDRESSSTREETNAME<\/th> <td>Jalan Kukoh<\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>ADDRESSPOSTALCODE<\/th> <td>161001<\/td> <\/tr><tr bgcolor=\"\"> <th>DESCRIPTION_MYENV<\/th> <td><\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>IMPLEMENTATION_DATE<\/th> <td><\/td> <\/tr><tr bgcolor=\"\"> <th>ADDRESS_MYENV<\/th> <td>Blk 1, Jalan Kukoh, Singapore 161001<\/td> <\/tr><tr bgcolor=\"#E3E3F3\"> <th>INC_CRC<\/th> <td>8943084A1D332148<\/td> <\/tr><tr bgcolor=\"\"> <th>FMEL_UPD_D<\/th> <td>20210330151704<\/td> <\/tr><\/table><\/center>" }, "geometry": { "type": "Point", "coordinates": [ 103.839945947185996, 1.28823055540002, 0.0 ] } },')
+        expected = [{'name': 'Jalan Kukoh Blk 1 (Kukoh 21 Food Centre)', 'photourl': AnyHttpUrl('http://www.nea.gov.sg/images/default-source/Hawker-Centres-Division/resize_1267874440744.jpg', scheme='http', host='www.nea.gov.sg', tld='sg', host_type='domain', path='/images/default-source/Hawker-Centres-Division/resize_1267874440744.jpg'), 'loc': {'type': 'Point', 'coordinates': [103.839945947186, 1.28823055540002]}}]
+        actual = extract_data(filename='/tmp/test_file')
+        actual[0].pop('creation_timestamp')
+        assert expected == actual
+        
