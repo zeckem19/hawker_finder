@@ -23,6 +23,7 @@ def refresh_db_data(data: List[Dict]):
     2. inserts data
     3. creates index on location
     '''
+    
     hawker_collection.delete_many({})
     hawker_collection.insert_many(data)
     hawker_collection.create_index([("loc", GEOSPHERE)])

@@ -6,7 +6,9 @@ from pymongo import MongoClient, GEOSPHERE
 
 # MUSER = os.environ['MUSER']
 # MPASS = os.environ['MPASS']
-MURL = os.environ.get("MURL","mongodb://db:27017/")
+
+# if MURL variable not injected, call API on localhost
+MURL = os.environ.get("MURL","mongodb://localhost:27017/")
 
 client = MongoClient(MURL)
 hawker_collection = client["dev"]["hawkers"]

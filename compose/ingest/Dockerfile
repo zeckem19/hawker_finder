@@ -8,4 +8,4 @@ COPY ./src/ingest /app/
 
 WORKDIR /app
 
-CMD ["python","-m","flask","run","--port","9000","--no-debugger","--no-reload"]
+CMD ["python","-m","flask","run","--host=0.0.0.0","--port","9000","--no-debugger","--no-reload"]
